@@ -3,88 +3,153 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Jogo educativo de Língua Portuguesa para alunos do 6º ano.">
-  <title>Missão Língua Portuguesa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6545e8">
+  <meta name="description" content="Uma aventura divertida de Língua Portuguesa para o 6º ano.">
+  <title>Missão Português — Aventura do Saber</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
-  <header class="topo">
-    <a href="#" class="logo" aria-label="Página inicial do jogo">
-      📚 Missão Português
+  <div class="decor decor-1" aria-hidden="true">✦</div>
+  <div class="decor decor-2" aria-hidden="true">★</div>
+  <div class="decor decor-3" aria-hidden="true">✧</div>
+
+  <header class="topbar">
+    <a class="logo" href="#" aria-label="Início">
+      <span class="logo-icon">📚</span>
+      <span>MISSÃO <b>PORTUGUÊS</b></span>
     </a>
-    <span class="ano">6º ano • Aprender brincando!</span>
+
+    <button id="som-toggle" class="sound-button"
+      type="button" aria-pressed="true" aria-label="Desligar sons">
+      🔊 Som ligado
+    </button>
   </header>
 
-  <main class="container">
-    <section id="tela-inicial" class="painel">
-      <div class="emoji-grande" aria-hidden="true">🚀</div>
-      <p class="etiqueta">DESAFIO DO CONHECIMENTO</p>
-      <h1>Vamos jogar?</h1>
-      <p class="descricao">
-        Prepare-se para uma aventura pela Língua Portuguesa!
-        Responda às perguntas, ganhe pontos e mostre o que você sabe.
+  <main class="game-container">
+    <section id="tela-inicial" class="screen start-screen">
+      <div class="hero-art" aria-hidden="true">
+        <div class="planet">🪐</div>
+        <div class="book-character">📖<span>✨</span></div>
+        <div class="little-star star-a">⭐</div>
+        <div class="little-star star-b">💫</div>
+        <div class="little-star star-c">✏️</div>
+      </div>
+
+      <div class="pill">🎮 JOGO EDUCATIVO • 6º ANO</div>
+      <h1>Uma aventura<br>pelas palavras!</h1>
+      <p class="intro">
+        Prepare sua mente, jovem explorador! Responda aos desafios,
+        ganhe estrelas e conquiste o tesouro da Língua Portuguesa.
       </p>
-      <div class="regras">
-        <span>⭐ 10 pontos por acerto</span>
-        <span>🧠 10 perguntas</span>
-        <span>💚 Sem perder vidas</span>
+
+      <div class="feature-row">
+        <div>⭐ <b>10 fases</b></div>
+        <div>💎 <b>Moedas</b></div>
+        <div>🏆 <b>Prêmios</b></div>
       </div>
-      <button id="botao-iniciar" class="botao principal">
-        Começar missão 🎮
+
+      <label class="player-label" for="nome-jogador">
+        Como podemos chamar você?
+      </label>
+      <input id="nome-jogador" class="player-input"
+        type="text" maxlength="18" placeholder="Digite seu apelido (opcional)"
+        autocomplete="off">
+
+      <button id="botao-iniciar" class="btn btn-main">
+        COMEÇAR A AVENTURA <span>🚀</span>
       </button>
+      <p class="tiny-note">Sem pressa! Aqui, aprender é a maior vitória 💜</p>
     </section>
 
-    <section id="tela-jogo" class="painel escondido"
-      aria-labelledby="texto-pergunta">
-      <div class="informacoes">
-        <span class="contador" id="contador">Pergunta 1 de 10</span>
-        <span class="pontuacao">⭐ <span id="pontos">0</span> pontos</span>
+    <section id="tela-jogo" class="screen quiz-screen hidden"
+      aria-labelledby="pergunta">
+      <div class="game-topline">
+        <button id="botao-sair" class="back-button" type="button"
+          aria-label="Voltar ao início">← Início</button>
+        <div class="level-badge">🗺️ FASE <span id="fase">1</span>/10</div>
+        <div class="coin-counter">🪙 <span id="moedas">0</span></div>
       </div>
 
-      <div class="barra-fundo" role="progressbar"
-        aria-label="Progresso do jogo"
-        aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"
-        id="progresso">
-        <div id="barra" class="barra"></div>
+      <div class="progress-track" role="progressbar"
+        aria-label="Progresso da aventura" aria-valuemin="0"
+        aria-valuemax="10" aria-valuenow="0" id="progresso">
+        <div id="barra" class="progress-fill"></div>
       </div>
 
-      <p id="categoria" class="etiqueta">GRAMÁTICA</p>
-      <h2 id="texto-pergunta" tabindex="-1">Pergunta</h2>
+      <div class="score-row">
+        <span>⭐ Pontos: <b id="pontos">0</b></span>
+        <span>🔥 Combo: <b id="combo">0</b></span>
+      </div>
 
-      <div id="alternativas" class="alternativas"></div>
+      <div class="mascot-row">
+        <div id="mascote" class="mascot" aria-hidden="true">🐸</div>
+        <div class="speech-bubble">
+          <b id="mascote-titulo">Oi, explorador!</b>
+          <p id="mascote-texto">Vamos descobrir a resposta certa?</p>
+        </div>
+      </div>
 
-      <p id="feedback" class="feedback" role="status"
-        aria-live="polite"></p>
+      <div class="question-card">
+        <div class="category-tag" id="categoria">📝 GRAMÁTICA</div>
+        <h2 id="pergunta" tabindex="-1">Preparado para o desafio?</h2>
+        <p class="choose-hint">👇 Escolha uma resposta!</p>
+        <div id="alternativas" class="answer-grid"></div>
 
-      <button id="botao-proxima" class="botao principal escondido">
-        Próxima pergunta ➜
-      </button>
+        <div id="feedback" class="feedback" role="status"
+          aria-live="polite"></div>
+
+        <button id="botao-proxima" class="btn btn-main hidden">
+          PRÓXIMA FASE ➜
+        </button>
+      </div>
+
+      <div class="game-footer">
+        <span>🧠 Use seus conhecimentos!</span>
+        <span>💜 Você consegue!</span>
+      </div>
     </section>
 
-    <section id="tela-final" class="painel escondido"
+    <section id="tela-final" class="screen finish-screen hidden"
       aria-labelledby="titulo-final">
-      <div class="emoji-grande" id="emoji-final" aria-hidden="true">🏆</div>
-      <p class="etiqueta">MISSÃO CONCLUÍDA</p>
-      <h2 id="titulo-final">Parabéns!</h2>
-      <p id="mensagem-final" class="descricao"></p>
+      <div id="chuva-final" class="celebration" aria-hidden="true"></div>
+      <div id="emoji-final" class="trophy">🏆</div>
+      <div class="pill">MISSÃO CONCLUÍDA!</div>
+      <h2 id="titulo-final">Você é incrível!</h2>
+      <p id="mensagem-final" class="intro"></p>
 
-      <div class="resultado">
-        <span>Seu resultado</span>
-        <strong id="resultado-pontos">0/100</strong>
-        <span id="resultado-acertos">0 acertos de 10 perguntas</span>
+      <div class="score-board">
+        <div class="score-box">
+          <span>⭐ Pontos</span>
+          <strong id="resultado-pontos">0</strong>
+        </div>
+        <div class="score-box">
+          <span>✅ Acertos</span>
+          <strong id="resultado-acertos">0/10</strong>
+        </div>
+        <div class="score-box">
+          <span>🪙 Moedas</span>
+          <strong id="resultado-moedas">0</strong>
+        </div>
       </div>
 
-      <button id="botao-reiniciar" class="botao principal">
-        Jogar novamente 🔄
+      <div id="classificacao" class="rank-card">🌟 Aventureiro do Saber</div>
+
+      <button id="botao-reiniciar" class="btn btn-main">
+        JOGAR NOVAMENTE 🔄
+      </button>
+      <button id="botao-inicio-final" class="btn btn-light">
+        VOLTAR AO INÍCIO 🏠
       </button>
     </section>
   </main>
 
-  <footer>
-    <p>Feito para aprender e se divertir! 💜</p>
-    <p>Jogo educativo • Língua Portuguesa • 6º ano</p>
+  <footer class="site-footer">
+    <span>🌈 Aprender pode ser uma aventura!</span>
+    <span>Missão Português • Projeto educativo</span>
   </footer>
+
+  <div id="efeitos" class="effects-layer" aria-hidden="true"></div>
 </body>
 </html>
