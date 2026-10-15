@@ -1,452 +1,331 @@
 const perguntas = [
   {
-    categoria: "📝 Substantivos",
+    categoria: "Substantivos",
     pergunta: "Qual palavra é um substantivo próprio?",
-    opcoes: ["Cidade", "Mariana", "Escola", "Cachorro"],
+    alternativas: ["cidade", "Mariana", "escola", "cachorro"],
     correta: 1,
-    dica: "Nomes de pessoas, lugares específicos e instituições podem ser próprios.",
     explicacao: "Mariana é um nome próprio e começa com letra maiúscula."
   },
   {
-    categoria: "🎨 Adjetivos",
+    categoria: "Adjetivos",
     pergunta: "Na frase 'O jardim florido é bonito', qual palavra é um adjetivo?",
-    opcoes: ["Jardim", "É", "Florido", "O"],
+    alternativas: ["jardim", "é", "florido", "o"],
     correta: 2,
-    dica: "Procure a palavra que caracteriza o jardim.",
-    explicacao: "Florido caracteriza o jardim. Por isso, é um adjetivo."
+    explicacao: "Florido caracteriza o jardim, por isso é um adjetivo."
   },
   {
-    categoria: "🏃 Verbos",
+    categoria: "Verbos",
     pergunta: "Qual palavra indica uma ação?",
-    opcoes: ["Alegre", "Caderno", "Correr", "Azul"],
+    alternativas: ["alegre", "caderno", "correr", "azul"],
     correta: 2,
-    dica: "Pense no que uma pessoa pode fazer.",
     explicacao: "Correr é um verbo que indica uma ação."
   },
   {
-    categoria: "❓ Pontuação",
-    pergunta: "Qual sinal usamos normalmente no final de uma pergunta direta?",
-    opcoes: ["Ponto-final (.)", "Vírgula (,)", "Interrogação (?)", "Dois-pontos (:)"],
+    categoria: "Pontuação",
+    pergunta: "Qual sinal usamos no final de uma pergunta direta?",
+    alternativas: [
+      "Ponto-final (.)",
+      "Exclamação (!)",
+      "Interrogação (?)",
+      "Vírgula (,)"
+    ],
     correta: 2,
-    dica: "Esse sinal aparece no final de frases interrogativas.",
     explicacao: "O ponto de interrogação indica uma pergunta direta."
   },
   {
-    categoria: "🔎 Interpretação",
+    categoria: "Interpretação",
     pergunta: "Lia levou um guarda-chuva porque o céu estava escuro. Por quê?",
-    opcoes: [
-      "Ia brincar.",
-      "O céu estava escuro.",
-      "Estava calor.",
-      "Perdeu a mochila."
+    alternativas: [
+      "Porque ia brincar.",
+      "Porque o céu estava escuro.",
+      "Porque estava calor.",
+      "Porque perdeu a mochila."
     ],
     correta: 1,
-    dica: "A resposta está na própria frase!",
     explicacao: "O texto informa que Lia levou o guarda-chuva porque o céu estava escuro."
   },
   {
-    categoria: "💬 Sinônimos",
+    categoria: "Sinônimos",
     pergunta: "Qual palavra tem sentido semelhante a 'feliz'?",
-    opcoes: ["Contente", "Cansado", "Distante", "Nervoso"],
+    alternativas: ["contente", "cansado", "distante", "nervoso"],
     correta: 0,
-    dica: "Qual palavra também expressa alegria?",
-    explicacao: "Feliz e contente têm sentidos semelhantes."
+    explicacao: "Feliz e contente são palavras de sentidos semelhantes."
   },
   {
-    categoria: "↔️ Antônimos",
+    categoria: "Antônimos",
     pergunta: "Qual é o antônimo de 'generoso'?",
-    opcoes: ["Bondoso", "Solidário", "Egoísta", "Amigável"],
+    alternativas: ["bondoso", "solidário", "egoísta", "amigável"],
     correta: 2,
-    dica: "Procure uma palavra com sentido contrário.",
     explicacao: "Egoísta expressa uma ideia oposta à de generoso."
   },
   {
-    categoria: "🧩 Pronomes",
+    categoria: "Pronomes",
     pergunta: "Pedro estudou. Ele fez a tarefa. A palavra 'ele' substitui quem?",
-    opcoes: ["A tarefa", "Pedro", "O estudo", "A escola"],
+    alternativas: ["a tarefa", "Pedro", "o estudo", "a escola"],
     correta: 1,
-    dica: "Quem realizou as duas ações?",
     explicacao: "O pronome ele retoma o nome Pedro."
   },
   {
-    categoria: "🎉 Tipos de frase",
+    categoria: "Tipos de frase",
     pergunta: "Qual alternativa apresenta uma frase exclamativa?",
-    opcoes: [
+    alternativas: [
       "Onde está meu livro?",
       "Feche a porta.",
       "Hoje é segunda-feira.",
       "Que dia maravilhoso!"
     ],
     correta: 3,
-    dica: "Essa frase expressa emoção ou admiração.",
     explicacao: "A frase expressa emoção e termina com ponto de exclamação."
   },
   {
-    categoria: "🌱 Compreensão",
+    categoria: "Compreensão de texto",
     pergunta: "Ravi regou as plantas todos os dias. Uma semana depois, surgiram flores. O que ajudou as plantas?",
-    opcoes: [
+    alternativas: [
       "O cuidado e a rega.",
       "A falta de água.",
       "O frio da noite.",
       "A retirada das folhas."
     ],
     correta: 0,
-    dica: "Pense no que Ravi fez para cuidar das plantas.",
-    explicacao: "O cuidado e a rega são apresentados como parte do processo de crescimento."
+    explicacao: "O cuidado e a rega contribuíram para o crescimento das plantas."
   }
 ];
 
-const $ = (id) => document.getElementById(id);
+// Elementos do HTML
+const telaInicial = document.getElementById("tela-inicial");
+const telaJogo = document.getElementById("tela-jogo");
+const telaFinal = document.getElementById("tela-final");
 
-const telas = {
-  inicio: $("tela-inicial"),
-  jogo: $("tela-jogo"),
-  final: $("tela-final")
-};
+const botaoIniciar = document.getElementById("botao-iniciar");
+const botaoProxima = document.getElementById("botao-proxima");
+const botaoReiniciar = document.getElementById("botao-reiniciar");
 
-let indice = 0;
+const contador = document.getElementById("contador");
+const pontosTexto = document.getElementById("pontos");
+const categoria = document.getElementById("categoria");
+const textoPergunta = document.getElementById("texto-pergunta");
+const alternativas = document.getElementById("alternativas");
+const feedback = document.getElementById("feedback");
+const barra = document.getElementById("barra");
+const progresso = document.getElementById("progresso");
+
+let indiceAtual = 0;
 let pontos = 0;
 let acertos = 0;
-let combo = 0;
-let melhorCombo = 0;
-let moedas = 0;
 let respondeu = false;
-let somLigado = true;
-let audioContext = null;
-let temporizadorEfeito = null;
 
-function mostrarTela(nome) {
-  Object.values(telas).forEach((tela) => {
-    tela.classList.add("hidden");
+// Troca as telas do jogo
+function mostrarTela(tela) {
+  [telaInicial, telaJogo, telaFinal].forEach((elemento) => {
+    elemento.classList.add("escondido");
   });
 
-  telas[nome].classList.remove("hidden");
+  tela.classList.remove("escondido");
 }
 
-function atualizarPlacar() {
-  $("pontos").textContent = pontos;
-  $("combo").textContent = combo;
-  $("moedas").textContent = moedas;
-}
-
-function atualizarMascote(titulo, mensagem, emoji) {
-  $("mascote-titulo").textContent = titulo;
-  $("mascote-texto").textContent = mensagem;
-
-  if (emoji) {
-    $("mascote").textContent = emoji;
-  }
-}
-
-function tocarSom(tipo) {
-  if (!somLigado) return;
-
-  try {
-    const Audio = window.AudioContext || window.webkitAudioContext;
-    if (!Audio) return;
-
-    if (!audioContext) audioContext = new Audio();
-
-    if (audioContext.state === "suspended") {
-      audioContext.resume();
-    }
-
-    const notas = {
-      acerto: [523.25, 659.25, 783.99],
-      erro: [240, 190],
-      moeda: [880, 1174.66],
-      final: [523.25, 659.25, 783.99, 1046.5],
-      clique: [420]
-    };
-
-    const frequencias = notas[tipo] || notas.clique;
-
-    frequencias.forEach((frequencia, i) => {
-      const oscilador = audioContext.createOscillator();
-      const volume = audioContext.createGain();
-      const inicio = audioContext.currentTime + i * 0.11;
-
-      oscilador.type = tipo === "erro" ? "triangle" : "sine";
-      oscilador.frequency.setValueAtTime(frequencia, inicio);
-
-      volume.gain.setValueAtTime(0.0001, inicio);
-      volume.gain.exponentialRampToValueAtTime(0.12, inicio + 0.02);
-      volume.gain.exponentialRampToValueAtTime(0.0001, inicio + 0.16);
-
-      oscilador.connect(volume);
-      volume.connect(audioContext.destination);
-
-      oscilador.start(inicio);
-      oscilador.stop(inicio + 0.18);
-    });
-  } catch (erro) {
-    // O jogo continua funcionando mesmo se o áudio não estiver disponível.
-  }
-}
-
-function criarParticulas(elemento, quantidade = 18) {
-  const simbolos = ["⭐", "✨", "💜", "🌈", "🎉", "💎"];
-
-  for (let i = 0; i < quantidade; i++) {
-    const particula = document.createElement("span");
-
-    particula.className = "particle";
-    particula.textContent =
-      simbolos[Math.floor(Math.random() * simbolos.length)];
-
-    particula.style.setProperty("--x", `${Math.random() * 95}%`);
-    particula.style.setProperty("--size", `${16 + Math.random() * 18}px`);
-    particula.style.setProperty("--duration", `${1 + Math.random()}s`);
-
-    elemento.appendChild(particula);
-
-    particula.addEventListener("animationend", () => {
-      particula.remove();
-    });
-  }
-}
-
-function explosao() {
-  const camada = $("efeitos");
-  camada.replaceChildren();
-  criarParticulas(camada, 24);
-
-  clearTimeout(temporizadorEfeito);
-  temporizadorEfeito = setTimeout(() => camada.replaceChildren(), 2400);
-}
-
+// Inicia ou reinicia a partida
 function iniciarJogo() {
-  indice = 0;
+  indiceAtual = 0;
   pontos = 0;
   acertos = 0;
-  combo = 0;
-  melhorCombo = 0;
-  moedas = 0;
   respondeu = false;
 
-  atualizarPlacar();
-  mostrarTela("jogo");
+  pontosTexto.textContent = pontos;
+
+  mostrarTela(telaJogo);
   mostrarPergunta();
-  tocarSom("clique");
 }
 
+// Exibe a pergunta atual
 function mostrarPergunta() {
   respondeu = false;
 
-  const atual = perguntas[indice];
+  const atual = perguntas[indiceAtual];
 
-  $("fase").textContent = indice + 1;
-  $("categoria").textContent = atual.categoria;
-  $("pergunta").textContent = atual.pergunta;
-  $("feedback").className = "feedback";
-  $("feedback").textContent = "";
+  contador.textContent =
+    `Pergunta ${indiceAtual + 1} de ${perguntas.length}`;
 
-  $("botao-proxima").classList.add("hidden");
-  $("botao-proxima").textContent =
-    indice === perguntas.length - 1
-      ? "CONQUISTAR MEU PRÊMIO 🏆"
-      : "PRÓXIMA FASE ➜";
+  categoria.textContent = atual.categoria.toUpperCase();
+  textoPergunta.textContent = atual.pergunta;
+  pontosTexto.textContent = pontos;
 
-  const percentual = (indice / perguntas.length) * 100;
-  $("barra").style.width = `${percentual}%`;
-  $("progresso").setAttribute("aria-valuenow", indice);
+  feedback.textContent = "";
+  feedback.className = "feedback";
 
-  const lista = $("alternativas");
-  lista.replaceChildren();
+  botaoProxima.classList.add("escondido");
 
-  atual.opcoes.forEach((opcao, posicao) => {
+  alternativas.replaceChildren();
+
+  // Atualiza a barra de progresso
+  const percentual = (indiceAtual / perguntas.length) * 100;
+
+  barra.style.width = `${percentual}%`;
+  progresso.setAttribute("aria-valuenow", indiceAtual);
+
+  // Cria os botões das alternativas
+  atual.alternativas.forEach((opcao, indice) => {
     const botao = document.createElement("button");
-    const letra = document.createElement("span");
-    const texto = document.createElement("span");
 
     botao.type = "button";
-    botao.className = "answer";
+    botao.className = "alternativa";
 
-    letra.className = "answer-letter";
-    letra.textContent = String.fromCharCode(65 + posicao);
+    botao.textContent =
+      `${String.fromCharCode(65 + indice)}) ${opcao}`;
 
-    texto.textContent = opcao;
+    botao.addEventListener("click", () => {
+      verificarResposta(indice);
+    });
 
-    botao.append(letra, texto);
-    botao.addEventListener("click", () => verificarResposta(posicao));
-
-    lista.appendChild(botao);
+    alternativas.appendChild(botao);
   });
 
-  atualizarMascote(
-    "Nova missão! 🐸",
-    "Leia com atenção e escolha sua resposta. Você consegue!",
-    "🐸"
-  );
-
-  $("pergunta").focus();
+  textoPergunta.focus();
 }
 
-function mostrarFeedback(tipo, mensagem) {
-  const elemento = $("feedback");
-  elemento.textContent = mensagem;
-  elemento.className = `feedback visible ${tipo}`;
-}
-
-function verificarResposta(escolhida) {
+// Confere a resposta e atualiza a pontuação
+function verificarResposta(indiceEscolhido) {
   if (respondeu) return;
 
   respondeu = true;
 
-  const atual = perguntas[indice];
-  const botoes = $("alternativas").querySelectorAll(".answer");
-  const acertou = escolhida === atual.correta;
+  const atual = perguntas[indiceAtual];
+  const botoes = alternativas.querySelectorAll(".alternativa");
 
-  botoes.forEach((botao, posicao) => {
+  const acertou = indiceEscolhido === atual.correta;
+
+  // Desabilita os botões e destaca as respostas
+  botoes.forEach((botao, indice) => {
     botao.disabled = true;
 
-    if (posicao === atual.correta) {
-      botao.classList.add("correct");
-    } else if (posicao === escolhida) {
-      botao.classList.add("wrong");
+    if (indice === atual.correta) {
+      botao.classList.add("correta");
+    } else if (indice === indiceEscolhido) {
+      botao.classList.add("errada");
     }
   });
 
   if (acertou) {
-    combo++;
-    melhorCombo = Math.max(melhorCombo, combo);
+    pontos += 10;
     acertos++;
 
-    // Cada acerto vale 10 pontos.
-    // A partir do terceiro acerto seguido, há bônus.
-    const bonus = combo >= 3 ? 5 : 0;
-    const ganho = 10 + bonus;
+    feedback.textContent = `🎉 Muito bem! +10 pontos! ${atual.explicacao}`;
+    feedback.classList.add("acerto");
 
-    pontos += ganho;
-    moedas += 2 + (combo >= 3 ? 1 : 0);
-
-    tocarSom("acerto");
-    if (combo >= 3) tocarSom("moeda");
-
-    mostrarFeedback(
-      "success",
-      `🎉 ACERTOU! +${ganho} pontos! ${atual.explicacao}` +
-      (bonus ? " 🔥 Bônus de combo!" : "")
+    // Anima a pergunta quando a resposta está correta
+    textoPergunta.animate(
+      [
+        { transform: "scale(1)" },
+        { transform: "scale(1.04)" },
+        { transform: "scale(1)" }
+      ],
+      {
+        duration: 350,
+        easing: "ease-out"
+      }
     );
 
-    atualizarMascote(
-      combo >= 3 ? `Combo de ${combo}! 🔥` : "Muito bem! 🌟",
-      combo >= 3
-        ? "Você está arrasando! Continue sua sequência!"
-        : "Resposta correta! Vamos conquistar mais estrelas!",
-      combo >= 3 ? "🤩" : "🐸"
+    // Pequena comemoração na resposta correta
+    const respostaCorreta = botoes[atual.correta];
+
+    respostaCorreta.animate(
+      [
+        { transform: "scale(1)" },
+        { transform: "scale(1.04)" },
+        { transform: "scale(1)" }
+      ],
+      {
+        duration: 400,
+        easing: "ease-out"
+      }
     );
 
-    criarParticulas($("efeitos"), combo >= 3 ? 24 : 13);
-    explosao();
   } else {
-    combo = 0;
-
-    tocarSom("erro");
-
-    mostrarFeedback(
-      "mistake",
-      `💡 Quase! ${atual.explicacao} Continue tentando!`
-    );
-
-    atualizarMascote(
-      "Não desista! 💜",
-      `Aqui vai uma dica: ${atual.dica}`,
-      "🧐"
-    );
+    feedback.textContent = `💜 Quase! ${atual.explicacao}`;
+    feedback.classList.add("erro");
   }
 
-  atualizarPlacar();
+  pontosTexto.textContent = pontos;
 
-  const percentual = ((indice + 1) / perguntas.length) * 100;
-  $("barra").style.width = `${percentual}%`;
-  $("progresso").setAttribute("aria-valuenow", indice + 1);
+  // Atualiza o progresso da missão
+  const progressoAtual =
+    ((indiceAtual + 1) / perguntas.length) * 100;
 
-  $("botao-proxima").classList.remove("hidden");
-  $("botao-proxima").focus();
+  barra.style.width = `${progressoAtual}%`;
+  progresso.setAttribute("aria-valuenow", indiceAtual + 1);
+
+  // Muda o texto do botão na última pergunta
+  botaoProxima.textContent =
+    indiceAtual === perguntas.length - 1
+      ? "Ver resultado 🏆"
+      : "Próxima pergunta ➜";
+
+  botaoProxima.classList.remove("escondido");
+  botaoProxima.focus();
 }
 
+// Avança para a próxima pergunta
 function proximaPergunta() {
   if (!respondeu) return;
 
-  indice++;
+  indiceAtual++;
 
-  if (indice < perguntas.length) {
+  if (indiceAtual < perguntas.length) {
     mostrarPergunta();
   } else {
     finalizarJogo();
   }
 }
 
+// Mostra o resultado final
 function finalizarJogo() {
-  mostrarTela("final");
+  mostrarTela(telaFinal);
 
-  $("resultado-pontos").textContent = pontos;
-  $("resultado-acertos").textContent = `${acertos}/${perguntas.length}`;
-  $("resultado-moedas").textContent = moedas;
+  const resultadoPontos =
+    document.getElementById("resultado-pontos");
 
-  const nome = $("nome-jogador").value.trim();
-  const saudacao = nome ? `${nome}, ` : "";
+  const resultadoAcertos =
+    document.getElementById("resultado-acertos");
 
-  let titulo;
-  let mensagem;
-  let emoji;
-  let classificacao;
+  const tituloFinal =
+    document.getElementById("titulo-final");
 
-  if (acertos === 10) {
-    titulo = `${saudacao}missão perfeita!`;
-    mensagem = "Você acertou todas! Sua dedicação merece uma grande comemoração!";
-    emoji = "👑";
-    classificacao = "🏆 Lenda da Língua Portuguesa";
-  } else if (acertos >= 8) {
-    titulo = `${saudacao}você brilhou!`;
-    mensagem = "Que aventura incrível! Você mostrou que conhece muito bem as palavras.";
-    emoji = "🏆";
-    classificacao = "🌟 Mestre das Palavras";
-  } else if (acertos >= 5) {
-    titulo = `${saudacao}parabéns!`;
-    mensagem = "Você avançou bastante! Continue praticando para desbloquear novos conhecimentos.";
-    emoji = "🥇";
-    classificacao = "🚀 Explorador do Saber";
+  const mensagemFinal =
+    document.getElementById("mensagem-final");
+
+  const emojiFinal =
+    document.getElementById("emoji-final");
+
+  resultadoPontos.textContent = `${pontos}/100`;
+
+  resultadoAcertos.textContent =
+    `${acertos} acertos de ${perguntas.length} perguntas`;
+
+  // Mensagens de acordo com o desempenho
+  if (acertos >= 9) {
+    tituloFinal.textContent = "Você é incrível!";
+    mensagemFinal.textContent =
+      "Excelente trabalho! Você demonstrou muito conhecimento em Língua Portuguesa.";
+    emojiFinal.textContent = "🏆";
+
+  } else if (acertos >= 6) {
+    tituloFinal.textContent = "Muito bem!";
+    mensagemFinal.textContent =
+      "Você está no caminho certo! Continue praticando para aprender ainda mais.";
+    emojiFinal.textContent = "🌟";
+
   } else {
-    titulo = `${saudacao}continue explorando!`;
-    mensagem = "Cada erro ensina alguma coisa. Reveja as dicas e tente novamente!";
-    emoji = "🌈";
-    classificacao = "💜 Aprendiz Corajoso";
+    tituloFinal.textContent = "Continue tentando!";
+    mensagemFinal.textContent =
+      "Cada tentativa é uma oportunidade de aprender. Jogue novamente e descubra coisas novas!";
+    emojiFinal.textContent = "🚀";
   }
 
-  $("titulo-final").textContent = titulo;
-  $("mensagem-final").textContent = mensagem;
-  $("emoji-final").textContent = emoji;
-  $("classificacao").textContent = classificacao;
-
-  $("chuva-final").replaceChildren();
-  criarParticulas($("chuva-final"), 30);
-
-  tocarSom("final");
-}
-
-function voltarInicio() {
-  mostrarTela("inicio");
-  $("nome-jogador").focus();
-}
-
-$("botao-iniciar").addEventListener("click", iniciarJogo);
-$("botao-proxima").addEventListener("click", proximaPergunta);
-$("botao-reiniciar").addEventListener("click", iniciarJogo);
-$("botao-sair").addEventListener("click", voltarInicio);
-$("botao-inicio-final").addEventListener("click", voltarInicio);
-
-$("som-toggle").addEventListener("click", () => {
-  somLigado = !somLigado;
-
-  const botao = $("som-toggle");
-  botao.textContent = somLigado ? "🔊 Som ligado" : "🔇 Som desligado";
-  botao.setAttribute("aria-pressed", String(somLigado));
-  botao.setAttribute(
-    "aria-label",
-    somLigado ? "Desligar sons" : "Ligar sons"
-  );
-
-  if (somLigado) tocarSom("clique");
-});
+  // Anima a entrada do emoji final
+  emojiFinal.animate(
+    [
+      {
+        transform: "scale(0.5) rotate(-15deg)",
+        opacity: 0
+      },
+      {
+        transform: "
