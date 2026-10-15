@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jogo educativo de Língua Portuguesa para alunos do 6º ano.">
+  <title>Missão Língua Portuguesa</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="topo">
+    <a href="#" class="logo" aria-label="Página inicial do jogo">
+      📚 Missão Português
+    </a>
+    <span class="ano">6º ano • Aprender brincando!</span>
+  </header>
+
+  <main class="container">
+    <section id="tela-inicial" class="painel">
+      <div class="emoji-grande" aria-hidden="true">🚀</div>
+      <p class="etiqueta">DESAFIO DO CONHECIMENTO</p>
+      <h1>Vamos jogar?</h1>
+      <p class="descricao">
+        Prepare-se para uma aventura pela Língua Portuguesa!
+        Responda às perguntas, ganhe pontos e mostre o que você sabe.
+      </p>
+      <div class="regras">
+        <span>⭐ 10 pontos por acerto</span>
+        <span>🧠 10 perguntas</span>
+        <span>💚 Sem perder vidas</span>
+      </div>
+      <button id="botao-iniciar" class="botao principal">
+        Começar missão 🎮
+      </button>
+    </section>
+
+    <section id="tela-jogo" class="painel escondido"
+      aria-labelledby="texto-pergunta">
+      <div class="informacoes">
+        <span class="contador" id="contador">Pergunta 1 de 10</span>
+        <span class="pontuacao">⭐ <span id="pontos">0</span> pontos</span>
+      </div>
+
+      <div class="barra-fundo" role="progressbar"
+        aria-label="Progresso do jogo"
+        aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"
+        id="progresso">
+        <div id="barra" class="barra"></div>
+      </div>
+
+      <p id="categoria" class="etiqueta">GRAMÁTICA</p>
+      <h2 id="texto-pergunta" tabindex="-1">Pergunta</h2>
+
+      <div id="alternativas" class="alternativas"></div>
+
+      <p id="feedback" class="feedback" role="status"
+        aria-live="polite"></p>
+
+      <button id="botao-proxima" class="botao principal escondido">
+        Próxima pergunta ➜
+      </button>
+    </section>
+
+    <section id="tela-final" class="painel escondido"
+      aria-labelledby="titulo-final">
+      <div class="emoji-grande" id="emoji-final" aria-hidden="true">🏆</div>
+      <p class="etiqueta">MISSÃO CONCLUÍDA</p>
+      <h2 id="titulo-final">Parabéns!</h2>
+      <p id="mensagem-final" class="descricao"></p>
+
+      <div class="resultado">
+        <span>Seu resultado</span>
+        <strong id="resultado-pontos">0/100</strong>
+        <span id="resultado-acertos">0 acertos de 10 perguntas</span>
+      </div>
+
+      <button id="botao-reiniciar" class="botao principal">
+        Jogar novamente 🔄
+      </button>
+    </section>
+  </main>
+
+  <footer>
+    <p>Feito para aprender e se divertir! 💜</p>
+    <p>Jogo educativo • Língua Portuguesa • 6º ano</p>
+  </footer>
+</body>
+</html>
